@@ -1,14 +1,14 @@
-const NUM_ROWS: usize = 128;
-const NUM_COLS: usize = 8;
+pub const NUM_ROWS: i64 = 128;
+pub const NUM_COLS: i64 = 8;
 
 #[derive(Debug, Clone, Eq, PartialEq)]
 pub struct Bound {
-    low: usize,
-    high: usize,
+    low: i64,
+    high: i64,
 }
 
 impl Bound {
-    pub fn new(low: usize, high: usize) -> Self {
+    pub fn new(low: i64, high: i64) -> Self {
         Self { low, high }
     }
 
@@ -19,6 +19,10 @@ impl Bound {
     pub fn split_high(&mut self) {
         self.low = (self.high - self.low) / 2 + 1 + self.low;
     }
+}
+
+pub fn seat_id(row: i64, col: i64) -> i64 {
+    row * NUM_COLS + col
 }
 
 pub struct Resolver {
@@ -43,11 +47,11 @@ impl Resolver {
         self.i == self.instructions.len()
     }
 
-    pub fn seat_id(&self) -> usize {
-        self.row_bound.low * NUM_COLS + self.col_bound.low
+    pub fn seat_id(&self) -> i64 {
+        seat_id(self.row_bound.low, self.col_bound.low)
     }
 
-    pub fn resolve(&mut self) -> usize {
+    pub fn resolve(&mut self) -> i64 {
         while !self.is_resolved() {
             self.step();
         }
