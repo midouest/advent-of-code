@@ -57,17 +57,3 @@ impl SeatFinder {
         self.found.unwrap()
     }
 }
-
-#[cfg(test)]
-mod tests {
-    use crate::core::parse_lines;
-
-    use super::SeatFinder;
-
-    #[test]
-    fn test() {
-        let passes: Vec<String> = parse_lines("input/day05/boarding_passes.txt").unwrap();
-        let mut finder = SeatFinder::new(passes);
-        assert_eq!(finder.find(), 0);
-    }
-}
