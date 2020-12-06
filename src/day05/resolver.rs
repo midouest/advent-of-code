@@ -12,10 +12,6 @@ impl Bound {
         Self { low, high }
     }
 
-    pub fn can_split(&self) -> bool {
-        self.low != self.high
-    }
-
     pub fn split_low(&mut self) {
         self.high = (self.high - self.low) / 2 + self.low;
     }
