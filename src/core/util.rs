@@ -1,4 +1,4 @@
-use std::ops::Range;
+use std::{collections::HashMap, ops::Range};
 
 pub fn last_n(n: usize, max: usize) -> Range<usize> {
     if n <= max {
@@ -22,6 +22,13 @@ pub fn split_groups(contents: &str) -> Vec<Vec<&str>> {
     }
     groups.push(buffer);
     groups
+}
+
+pub fn hash_map<K, V>(entries: Vec<(K, V)>) -> HashMap<K, V>
+where
+    K: std::cmp::Eq + std::hash::Hash,
+{
+    entries.into_iter().collect()
 }
 
 #[cfg(test)]
