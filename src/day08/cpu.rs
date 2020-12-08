@@ -33,7 +33,7 @@ impl Cpu {
         use Operation::*;
 
         match operation {
-            Nop => self.inc_pc(),
+            Nop(_) => self.inc_pc(),
             Acc(x) => {
                 self.acc += x;
                 self.inc_pc();

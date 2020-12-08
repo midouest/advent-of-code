@@ -2,7 +2,7 @@ use std::str::FromStr;
 
 #[derive(Debug, Copy, Clone, Eq, PartialEq)]
 pub enum Operation {
-    Nop,
+    Nop(i64),
     Acc(i64),
     Jmp(i64),
 }
@@ -34,7 +34,7 @@ impl FromStr for Operation {
             .map_err(|_| OperationError::BadArgument)?;
 
         match components[0] {
-            "nop" => Ok(Operation::Nop),
+            "nop" => Ok(Operation::Nop(arg)),
             "acc" => Ok(Operation::Acc(arg)),
             "jmp" => Ok(Operation::Jmp(arg)),
             _ => Err(OperationError::BadOperation),
@@ -65,7 +65,7 @@ acc +6";
         assert_eq!(
             ops,
             vec![
-                Nop,
+                Nop(0),
                 Acc(1),
                 Jmp(4),
                 Acc(3),
