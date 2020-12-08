@@ -18,6 +18,10 @@ impl SolvePart1 {
             instructions: HashSet::new(),
         }
     }
+
+    pub fn instructions(&self) -> &HashSet<usize> {
+        &self.instructions
+    }
 }
 
 impl Solver for SolvePart1 {
