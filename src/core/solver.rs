@@ -11,6 +11,15 @@ use cursive::{
 
 use super::controller::{emit, run, take_events, Controller};
 
+pub fn solve<S, T>(solver: S, c: Rc<RefCell<Cursive>>)
+where
+    S: Solver<T> + 'static,
+    T: std::fmt::Display,
+{
+    let controller = SolverController::new(solver);
+    controller.run(c);
+}
+
 pub trait Solver<T> {
     fn is_done(&self) -> bool;
     fn solution(&self) -> Option<T>;

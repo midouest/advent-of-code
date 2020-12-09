@@ -10,7 +10,7 @@ use part2::Solve3Sum;
 use crate::core::{
     fs::parse_lines,
     puzzle::{Puzzle, PuzzlePart},
-    solver::SolverController,
+    solver::solve,
 };
 
 #[derive(Debug)]
@@ -36,12 +36,10 @@ impl Puzzle for Day01 {
             parse_lines("input/day01/expense_report.txt").expect("Could not load puzzle input");
         if part == PuzzlePart::One {
             let solver = Solve2Sum::new(elements, 2020);
-            let controller = SolverController::new(solver);
-            controller.run(c);
+            solve(solver, c);
         } else {
             let solver = Solve3Sum::new(elements, 2020);
-            let controller = SolverController::new(solver);
-            controller.run(c);
+            solve(solver, c);
         }
     }
 }

@@ -15,8 +15,8 @@ use thiserror::Error;
 use crate::core::{
     fs::parse_lines,
     puzzle::{Puzzle, PuzzlePart},
+    solver::solve,
     solver::Solver,
-    solver::SolverController,
     util::last_n,
 };
 
@@ -314,12 +314,10 @@ impl Puzzle for Day02 {
             parse_lines("input/day02/password_database.txt").expect("Could not load puzzle input");
         if part == PuzzlePart::One {
             let solver = SolveDay02::<OldPolicy>::new(passwords);
-            let controller = SolverController::new(solver);
-            controller.run(c);
+            solve(solver, c);
         } else {
             let solver = SolveDay02::<NewPolicy>::new(passwords);
-            let controller = SolverController::new(solver);
-            controller.run(c);
+            solve(solver, c);
         }
     }
 }

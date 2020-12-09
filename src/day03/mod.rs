@@ -12,7 +12,7 @@ use crate::core::{
     fs::parse_lines,
     grid::Grid,
     puzzle::{Puzzle, PuzzlePart},
-    solver::SolverController,
+    solver::solve,
 };
 
 #[derive(Debug)]
@@ -39,13 +39,11 @@ impl Puzzle for Day03 {
         let grid = Grid::try_from(rows).expect("Could not parse puzzle input");
         if part == PuzzlePart::One {
             let solver = SolvePart1::new(grid, (3, 1));
-            let controller = SolverController::new(solver);
-            controller.run(c);
+            solve(solver, c);
         } else {
             let strategies = vec![(1, 1), (3, 1), (5, 1), (7, 1), (1, 2)];
             let solver = SolvePart2::new(grid, strategies);
-            let controller = SolverController::new(solver);
-            controller.run(c);
+            solve(solver, c);
         }
     }
 }
