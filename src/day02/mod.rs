@@ -255,7 +255,7 @@ where
     }
 }
 
-impl<P> Solver for SolveDay02<P>
+impl<P> Solver<i64> for SolveDay02<P>
 where
     P: PasswordPolicy,
 {

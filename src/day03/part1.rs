@@ -29,7 +29,7 @@ impl SolvePart1 {
     }
 }
 
-impl Solver for SolvePart1 {
+impl Solver<i64> for SolvePart1 {
     fn is_done(&self) -> bool {
         self.position.1 >= self.grid.height()
     }

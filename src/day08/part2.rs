@@ -56,7 +56,7 @@ impl SolvePart2 {
     }
 }
 
-impl Solver for SolvePart2 {
+impl Solver<i64> for SolvePart2 {
     fn is_done(&self) -> bool {
         self.terminated
     }

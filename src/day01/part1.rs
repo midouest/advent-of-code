@@ -32,7 +32,7 @@ impl Solve2Sum {
     }
 }
 
-impl Solver for Solve2Sum {
+impl Solver<i64> for Solve2Sum {
     fn is_done(&self) -> bool {
         self.i >= self.elements.len() || self.found.is_some()
     }

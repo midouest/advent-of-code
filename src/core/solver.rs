@@ -1,4 +1,4 @@
-use std::{cell::RefCell, rc::Rc};
+use std::{cell::RefCell, marker::PhantomData, rc::Rc};
 
 use cursive::{
     event::Event,
@@ -11,22 +11,22 @@ use cursive::{
 
 use super::controller::{emit, run, take_events, Controller};
 
-pub trait Solver {
+pub trait Solver<T> {
     fn is_done(&self) -> bool;
-    fn solution(&self) -> Option<i64>;
+    fn solution(&self) -> Option<T>;
     fn step(&mut self);
     fn draw(&self, printer: &Printer);
 
-    fn solve(&mut self) -> Option<i64> {
+    fn solve(&mut self) -> Option<T> {
         while !self.is_done() {
             self.step();
         }
         self.solution()
     }
 
-    fn with_done<T, F>(&self, f: F) -> Option<T>
+    fn with_done<U, F>(&self, f: F) -> Option<U>
     where
-        F: Fn() -> T,
+        F: Fn() -> U,
     {
         if self.is_done() {
             Some(f())
@@ -35,9 +35,9 @@ pub trait Solver {
         }
     }
 
-    fn with_done_some<T>(&self, t: T) -> Option<T> {
+    fn with_done_some<U>(&self, u: U) -> Option<U> {
         if self.is_done() {
-            Some(t)
+            Some(u)
         } else {
             None
         }
@@ -48,32 +48,39 @@ pub enum SolverEvent {
     Stop,
 }
 
-pub struct SolverController<S: Solver> {
+pub struct SolverController<S, T>
+where
+    S: Solver<T>,
+{
     is_running: bool,
     is_solved: bool,
     state: Rc<RefCell<S>>,
+    _phantom: PhantomData<T>,
 }
 
-impl<S> SolverController<S>
+impl<S, T> SolverController<S, T>
 where
-    S: Solver + 'static,
+    S: Solver<T> + 'static,
+    T: std::fmt::Display,
 {
     pub fn new(solver: S) -> Self {
         Self {
             is_running: true,
             is_solved: false,
             state: Rc::new(RefCell::new(solver)),
+            _phantom: PhantomData,
         }
     }
 
     pub fn run(self, c: Rc<RefCell<Cursive>>) {
-        run::<SolverController<S>, SolverEvent>(self, c)
+        run::<SolverController<S, T>, SolverEvent>(self, c)
     }
 }
 
-impl<S> Controller for SolverController<S>
+impl<S, T> Controller for SolverController<S, T>
 where
-    S: Solver + 'static,
+    S: Solver<T> + 'static,
+    T: ToString,
 {
     fn show(&mut self, c: Rc<RefCell<Cursive>>) {
         let mut siv = c.borrow_mut();

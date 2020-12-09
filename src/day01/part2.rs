@@ -26,7 +26,7 @@ impl Solve3Sum {
     }
 }
 
-impl Solver for Solve3Sum {
+impl Solver<i64> for Solve3Sum {
     fn is_done(&self) -> bool {
         self.i >= self.elements.len() || self.found.is_some()
     }
