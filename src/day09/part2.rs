@@ -63,7 +63,7 @@ impl Solver<usize> for SolvePart2 {
 mod tests {
     use super::SolvePart2;
 
-    use crate::core::{parse_lines, Solver};
+    use crate::core::Solver;
 
     #[test]
     fn it_solves_the_example() {
@@ -73,12 +73,5 @@ mod tests {
         ];
         let mut solver = SolvePart2::new(xmas, 127);
         assert_eq!(solver.solve(), Some(62));
-    }
-
-    #[test]
-    fn it_solves_the_puzzle() {
-        let xmas = parse_lines("input/day09/xmas.txt").unwrap();
-        let mut solver = SolvePart2::new(xmas, 133015568);
-        assert_eq!(solver.solve(), None);
     }
 }
